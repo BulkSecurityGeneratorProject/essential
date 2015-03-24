@@ -1,0 +1,18 @@
+{
+  "generator-jhipster": {
+    "baseName": "essential",
+    "packageName": "com.ethanaa.essential",
+    "packageFolder": "com/ethanaa/essential",
+    "authenticationType": "token",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Memory",
+    "prodDatabaseType": "postgresql",
+    "useCompass": true,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "javaVersion": "8"
+  }
+}

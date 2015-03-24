@@ -1,0 +1,11 @@
+---
+path: .
+instances: 1
+services:
+- essential
+applications:
+- name: essential
+  memory: 1024M
+  buildpack: https://github.com/lunias/java-buildpack.git
+  env:
+    SPRING_PROFILES_ACTIVE: prod
