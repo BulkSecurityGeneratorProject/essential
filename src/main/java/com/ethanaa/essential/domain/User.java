@@ -1,17 +1,31 @@
 package com.ethanaa.essential.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A user.
@@ -69,7 +83,23 @@ public class User extends AbstractAuditingEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Authority> authorities = new HashSet<>();
+    
+	@OneToMany(mappedBy = "user")
+    private List<OilReview> oilReviews = new ArrayList<>();
 
+	public User() {
+
+	}
+	
+	public User(String login, String password, String firstName, String lastName, String email) {
+		
+		this.login = login;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+	
     public Long getId() {
         return id;
     }
@@ -148,6 +178,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+    
+    public void addAuthorities(Authority... authorities) {
+    	this.authorities.addAll(Arrays.asList(authorities));
     }
 
     @Override

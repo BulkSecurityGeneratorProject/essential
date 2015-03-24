@@ -76,6 +76,25 @@ public class UserService {
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }
+    
+    public User createUser(String login, String password, String firstName, String lastName, String email) {
+    	
+    	return createUser(login, password, firstName, lastName, email, false);
+    }
+    
+    public User createUser(String login, String password, String firstName, String lastName, String email, boolean autoActivate) {
+    	
+    	User user = new User(login, passwordEncoder.encode(password), firstName, lastName, email);    	
+    	user.setActivated(autoActivate);    
+    	
+    	Authority baseAuthority = authorityRepository.findOne("ROLE_USER");
+    	
+    	user.addAuthorities(baseAuthority);
+    	
+    	user = userRepository.save(user);
+    	
+    	return user;
+    }
 
     public void updateUserInformation(String firstName, String lastName, String email) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u -> {

@@ -1,14 +1,12 @@
 package com.ethanaa.essential.repository;
 
-import com.ethanaa.essential.domain.User;
+import java.util.List;
+import java.util.Optional;
 
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
-import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-import java.util.Optional;
+import com.ethanaa.essential.domain.User;
 
 /**
  * Spring Data JPA repository for the User entity.
