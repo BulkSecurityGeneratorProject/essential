@@ -2,13 +2,8 @@ package com.ethanaa.essential.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -21,62 +16,37 @@ public class OilApplication implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;	
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "oil_id")	
-	private Oil oil;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "use_case_id")	
-	private UseCase useCase;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "application_id")	
-	private Application application;
+	@EmbeddedId
+    private OilApplicationId id = new OilApplicationId();		
 	
 	public OilApplication(UseCase useCase, Application application) {
 		
-		this.useCase = useCase;
-		this.application = application;
+		this.setUseCase(useCase);
+		this.setApplication(application);
 	}
 	
 	public OilApplication() {
 
 	}
 
-	public Long getId() {
+	public OilApplicationId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(OilApplicationId id) {
 		this.id = id;
 	}
-
-	public Oil getOil() {
-		return oil;
-	}
-
+	
 	public void setOil(Oil oil) {
-		this.oil = oil;
+		this.getId().setOil(oil);
 	}
-
-	public UseCase getUseCase() {
-		return useCase;
-	}
-
+	
 	public void setUseCase(UseCase useCase) {
-		this.useCase = useCase;
+		this.getId().setUseCase(useCase);
 	}
-
-	public Application getApplication() {
-		return application;
-	}
-
+	
 	public void setApplication(Application application) {
-		this.application = application;
+		this.getId().setApplication(application);
 	}
 
 	@Override

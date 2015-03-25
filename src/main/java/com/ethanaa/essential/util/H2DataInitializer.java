@@ -11,32 +11,44 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.ethanaa.essential.config.Constants;
+import com.ethanaa.essential.domain.Application;
+import com.ethanaa.essential.domain.ApplicationCategory;
 import com.ethanaa.essential.domain.Authority;
 import com.ethanaa.essential.domain.Oil;
 import com.ethanaa.essential.domain.OilApplication;
 import com.ethanaa.essential.domain.OilInfoItem;
+import com.ethanaa.essential.domain.OilReview;
 import com.ethanaa.essential.domain.Section;
 import com.ethanaa.essential.domain.UseCase;
+import com.ethanaa.essential.domain.UseCaseCategory;
 import com.ethanaa.essential.domain.User;
 import com.ethanaa.essential.repository.AuthorityRepository;
+import com.ethanaa.essential.service.ApplicationService;
 import com.ethanaa.essential.service.OilService;
+import com.ethanaa.essential.service.UseCaseService;
 import com.ethanaa.essential.service.UserService;
 
 @Component
 @Profile({Constants.SPRING_PROFILE_DEVELOPMENT})
 public class H2DataInitializer implements InitializingBean {
 
-	private UserService userService;
 	private AuthorityRepository authorityRepository;
+	private ApplicationService applicationService;
+	private UseCaseService useCaseService;
+	private UserService userService;
 	private OilService oilService;
 	
 	@Autowired
-	public H2DataInitializer(UserService userService, 
-			AuthorityRepository authorityRepository, 
+	public H2DataInitializer(AuthorityRepository authorityRepository,
+			ApplicationService applicationService,
+			UseCaseService useCaseService,
+			UserService userService, 
 			OilService oilService) {
 		
-		this.userService = userService;
 		this.authorityRepository = authorityRepository;
+		this.applicationService = applicationService;
+		this.useCaseService = useCaseService;
+		this.userService = userService;
 		this.oilService = oilService;		
 	}
 	
@@ -65,7 +77,13 @@ public class H2DataInitializer implements InitializingBean {
 		oils.put("anise", oilService.createOil("Anise"));
 		
 		Map<String, UseCase> useCases = new HashMap<>();
-		useCases.put("headache", new UseCase());
+		useCases.put("headache", useCaseService.createUseCase("Headache", "Pain in the head", UseCaseCategory.PAIN));
+		useCases.put("constipation", useCaseService.createUseCase("Constipation", "Not producing regular bowel movements", UseCaseCategory.DIGESTIVE));		
+		
+		Map<String, Application> applications = new HashMap<>();
+		applications.put("waft", applicationService.createApplication("Waft", "Waft off of the top and breathe in through the nose and mouth", ApplicationCategory.INHALATION));
+		applications.put("apply", applicationService.createApplication("Apply", "Prepare a salve and apply to the affected area", ApplicationCategory.SALVE));
+		applications.put("drink", applicationService.createApplication("Drink", "Create a tincture and drink it", ApplicationCategory.TINCTURE));		
 		
 		oilService.addOilInfoItems(oils.get("agar"), 
 				new OilInfoItem(Section.USES, "Modern Day Uses", "here is some markdown text"), 
@@ -74,7 +92,11 @@ public class H2DataInitializer implements InitializingBean {
 		oilService.addOilInfoItems(oils.get("anise"),
 				new OilInfoItem(Section.CLASSIFICATION, "", "Kingdom: Plantae"));
 		
-		oilService.addOilApplications(oils.get("agar"), new OilApplication());
+		oilService.addOilApplications(oils.get("agar"), new OilApplication(useCases.get("headache"), applications.get("waft")));
+		oilService.addOilApplications(oils.get("agar"), new OilApplication(useCases.get("constipation"), applications.get("drink")));
+		
+		oilService.addOilReviews(oils.get("anise"), new OilReview(users.get("ethanaa"), 7.5f, "liked the smell."));
+		oilService.addOilReviews(oils.get("anise"), new OilReview(users.get("user"), 1.0f, "tasted like liquorice. yuck."));		
 				
 	}
 

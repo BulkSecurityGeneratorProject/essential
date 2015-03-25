@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,13 +28,13 @@ public class Oil extends Ingredient implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)	
 	private Long id;
 	
-	@OneToMany(mappedBy = "oil", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<OilInfoItem> infoItems = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "oil", cascade = CascadeType.ALL)	
+	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)	
 	private List<OilApplication> applications = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "oil", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<OilReview> reviews = new ArrayList<>();		
 
 	public Oil(String name) {
@@ -85,6 +86,11 @@ public class Oil extends Ingredient implements Serializable {
 
 	public void setReviews(List<OilReview> reviews) {
 		this.reviews = reviews;
+	}
+	
+	public void addReviews(OilReview... reviews) {
+		
+		this.reviews.addAll(Arrays.asList(reviews));
 	}
 
 	@Override

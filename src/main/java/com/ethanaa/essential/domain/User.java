@@ -84,7 +84,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Authority> authorities = new HashSet<>();
     
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "id.user")
     private List<OilReview> oilReviews = new ArrayList<>();
 
 	public User() {

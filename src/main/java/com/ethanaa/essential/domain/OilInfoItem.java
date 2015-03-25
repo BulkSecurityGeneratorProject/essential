@@ -3,22 +3,14 @@ package com.ethanaa.essential.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "T_OIL_INFO_ITEM")
@@ -27,22 +19,8 @@ public class OilInfoItem extends AbstractAuditingEntity implements Serializable 
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "oil_id")
-	private Oil oil;
-	
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	@Column(name = "section", nullable = false)
-	private Section section;
-	
-	@Size(max = 50)
-	@Column(name = "subsection", length = 50)
-	private String subsection;
+	@EmbeddedId
+    private OilInfoItemId id = new OilInfoItemId();
 	
 	@Lob
 	@Column(name = "markdown")
@@ -53,45 +31,24 @@ public class OilInfoItem extends AbstractAuditingEntity implements Serializable 
 
 	public OilInfoItem(Section section, String subsection, String markdown) {
 		
-		this.section = section;
-		this.subsection = subsection;
-		this.markdown = markdown;
+		this.setSection(section);
+		this.setSubsection(subsection);
+		this.setMarkdown(markdown);
+		
+		this.setCreatedBy("system");
+		this.setCreatedDate(new DateTime());
 	}
 	
 	public OilInfoItem() {
 
 	}
 
-	public Long getId() {
+	public OilInfoItemId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(OilInfoItemId id) {
 		this.id = id;
-	}
-
-	public Oil getOil() {
-		return oil;
-	}
-
-	public void setOil(Oil oil) {
-		this.oil = oil;
-	}
-
-	public Section getSection() {
-		return section;
-	}
-
-	public void setSection(Section section) {
-		this.section = section;
-	}
-
-	public String getSubsection() {
-		return subsection;
-	}
-
-	public void setSubsection(String subsection) {
-		this.subsection = subsection;
 	}
 
 	public String getMarkdown() {
@@ -108,6 +65,18 @@ public class OilInfoItem extends AbstractAuditingEntity implements Serializable 
 
 	public void setOrdering(Integer ordering) {
 		this.ordering = ordering;
+	}
+	
+	public void setOil(Oil oil) {
+		this.getId().setOil(oil);
+	}
+	
+	public void setSection(Section section) {
+		this.getId().setSection(section);
+	}
+	
+	public void setSubsection(String subsection) {
+		this.getId().setSubsection(subsection);
 	}
 
 	@Override
@@ -133,5 +102,5 @@ public class OilInfoItem extends AbstractAuditingEntity implements Serializable 
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}		
+	}	
 }

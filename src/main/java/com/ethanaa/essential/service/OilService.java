@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ethanaa.essential.domain.Oil;
 import com.ethanaa.essential.domain.OilApplication;
 import com.ethanaa.essential.domain.OilInfoItem;
+import com.ethanaa.essential.domain.OilReview;
 import com.ethanaa.essential.repository.OilRepository;
 
 @Service
@@ -60,5 +61,18 @@ public class OilService {
 		oil = oilRepository.save(oil);
 		
 		return oil.getApplications();
+	}
+	
+	public List<OilReview> addOilReviews(Oil oil, OilReview... reviews) {
+		
+		for (OilReview review : reviews) {
+			review.setOil(oil);
+		}
+		
+		oil.addReviews(reviews);
+		
+		oil = oilRepository.save(oil);
+		
+		return oil.getReviews();
 	}
 }
