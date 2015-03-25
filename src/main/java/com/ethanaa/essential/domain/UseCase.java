@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +36,7 @@ public class UseCase implements Serializable {
 	@Column(name = "category", nullable = false)
 	private UseCaseCategory category;
 	
-	@Size(max = 50)
+	@Size(min = 1, max = 50)
 	@Column(name = "name", length = 50, unique = true)	
 	private String name;
 	
@@ -43,7 +44,7 @@ public class UseCase implements Serializable {
 	@Column(name = "description", length = 256)	
 	private String description;
 	
-	@OneToMany(mappedBy = "id.useCase")	
+	@OneToMany(mappedBy = "id.useCase", fetch = FetchType.LAZY)	
 	private List<OilApplication> applications = new ArrayList<>();
 
 	public UseCase(String name, String description, UseCaseCategory category) {

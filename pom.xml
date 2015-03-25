@@ -46,6 +46,8 @@
         <spring-security-oauth2.version>2.0.1.RELEASE</spring-security-oauth2.version>
         <swagger-springmvc.version>0.8.8</swagger-springmvc.version>
         <usertype-core.version>3.2.0.GA</usertype-core.version>
+        <spring-plugin.version>1.2.0.RELEASE</spring-plugin.version>
+        <spring-hateoas.version>0.17.0.RELEASE</spring-hateoas.version>
     </properties>
 
     <dependencies>
@@ -344,6 +346,20 @@
             <artifactId>metrics-spark-reporter</artifactId>
             <version>${metrics-spark-reporter.version}</version>
         </dependency>
+        
+        <!-- HATEOAS -->
+        
+        <dependency>
+            <groupId>org.springframework.plugin</groupId>
+            <artifactId>spring-plugin-core</artifactId>
+            <version>${spring-plugin.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+        </dependency>
+        
     </dependencies>
     <build>
         <resources>

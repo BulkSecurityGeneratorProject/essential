@@ -63,7 +63,7 @@ public class H2DataInitializer implements InitializingBean {
 		authorities = authorityRepository.save(authorities);
 		
 		Map<String, User> users = new HashMap<>();
-		users.put("admin", userService.createUser("admin", "admin", "AdminFirst", "AdminLast", "admin@essential.com", true));
+		users.put("admin", userService.createUser("admin", "admin", "AdminFirst", "AdminLast", "admin@essential.com", true, authorities.get(0), authorities.get(1)));
 		users.put("user", userService.createUser("user", "user", "UserFirst", "UserLast", "user@essential.com", true));
 		users.put("ethanaa", userService.createUser("ethanaa", "ethanaa", "Ethan", "Anderson", "ethanaa@gmail.com", true));
 		
@@ -88,7 +88,10 @@ public class H2DataInitializer implements InitializingBean {
 						"here is some markdown text"),
 						
 				new OilInfoItem(Section.SPECIES, "Aquilaria species that produce agarwood", 
-						"Aquilaria acuminata, found in Papua New Guinea"));
+						"Aquilaria acuminata, found in Papua New Guinea"),
+						
+				new OilInfoItem(Section.CHARACTERISTICS, "Visible nature",
+						"Apears brownish-green in color", 1));
 		
 		oilService.addOilInfoItems(oils.get("anise"),
 				

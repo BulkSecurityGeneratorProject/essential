@@ -7,7 +7,8 @@ import com.ethanaa.essential.repository.UserRepository;
 import com.ethanaa.essential.security.SecurityUtils;
 import com.ethanaa.essential.service.MailService;
 import com.ethanaa.essential.service.UserService;
-import com.ethanaa.essential.web.rest.dto.UserDTO;
+import com.ethanaa.essential.web.rest.resource.UserResource;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.*;
@@ -29,9 +31,9 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api")
-public class AccountResource {
+public class AccountEndpoint {
 
-    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
+    private final Logger log = LoggerFactory.getLogger(AccountEndpoint.class);
 
     @Inject
     private UserRepository userRepository;
@@ -49,7 +51,7 @@ public class AccountResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<?> registerAccount(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request) {
+    public ResponseEntity<?> registerAccount(@Valid @RequestBody UserResource userDTO, HttpServletRequest request) {
         return userRepository.findOneByLogin(userDTO.getLogin())
             .map(user -> new ResponseEntity<>("login already in use", HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(userDTO.getEmail())
@@ -101,10 +103,10 @@ public class AccountResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<UserDTO> getAccount() {
+    public ResponseEntity<UserResource> getAccount() {
         return Optional.ofNullable(userService.getUserWithAuthorities())
             .map(user -> new ResponseEntity<>(
-                new UserDTO(
+                new UserResource(
                     user.getLogin(),
                     null,
                     user.getFirstName(),
@@ -123,7 +125,7 @@ public class AccountResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<String> saveAccount(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> saveAccount(@RequestBody UserResource userDTO) {
         return userRepository
             .findOneByLogin(userDTO.getLogin())
             .filter(u -> u.getLogin().equals(SecurityUtils.getCurrentLogin()))

@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Test class for the UserResource REST controller.
  *
- * @see UserResource
+ * @see UserEndpoint
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -38,7 +38,7 @@ public class UserResourceTest {
 
     @Before
     public void setup() {
-        UserResource userResource = new UserResource();
+        UserEndpoint userResource = new UserEndpoint();
         ReflectionTestUtils.setField(userResource, "userRepository", userRepository);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource).build();
     }

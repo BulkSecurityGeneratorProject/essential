@@ -84,12 +84,21 @@ public class UserService {
     
     public User createUser(String login, String password, String firstName, String lastName, String email, boolean autoActivate) {
     	
+    	return createUser(login, password, firstName, lastName, email, autoActivate, new Authority[]{});
+    }
+    
+    public User createUser(String login, String password, String firstName, String lastName, String email, boolean autoActivate, Authority... authorities) {
+    	
     	User user = new User(login, passwordEncoder.encode(password), firstName, lastName, email);    	
     	user.setActivated(autoActivate);    
     	
-    	Authority baseAuthority = authorityRepository.findOne("ROLE_USER");
-    	
-    	user.addAuthorities(baseAuthority);
+    	if (authorities.length > 0) {
+    		user.addAuthorities(authorities);
+    		
+    	} else {    		
+        	Authority baseAuthority = authorityRepository.findOne("ROLE_USER");        	
+        	user.addAuthorities(baseAuthority);	
+    	}
     	
     	user = userRepository.save(user);
     	

@@ -8,7 +8,8 @@ import com.ethanaa.essential.repository.UserRepository;
 import com.ethanaa.essential.security.AuthoritiesConstants;
 import com.ethanaa.essential.service.MailService;
 import com.ethanaa.essential.service.UserService;
-import com.ethanaa.essential.web.rest.dto.UserDTO;
+import com.ethanaa.essential.web.rest.resource.UserResource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +29,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
@@ -77,12 +79,12 @@ public class AccountResourceTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(anyObject(), anyString());
 
-        AccountResource accountResource = new AccountResource();
+        AccountEndpoint accountResource = new AccountEndpoint();
         ReflectionTestUtils.setField(accountResource, "userRepository", userRepository);
         ReflectionTestUtils.setField(accountResource, "userService", userService);
         ReflectionTestUtils.setField(accountResource, "mailService", mockMailService);
 
-        AccountResource accountUserMockResource = new AccountResource();
+        AccountEndpoint accountUserMockResource = new AccountEndpoint();
         ReflectionTestUtils.setField(accountUserMockResource, "userRepository", userRepository);
         ReflectionTestUtils.setField(accountUserMockResource, "userService", mockUserService);
         ReflectionTestUtils.setField(accountUserMockResource, "mailService", mockMailService);
@@ -149,7 +151,7 @@ public class AccountResourceTest {
     @Test
     @Transactional
     public void testRegisterValid() throws Exception {
-        UserDTO u = new UserDTO(
+        UserResource u = new UserResource(
             "joe",                  // login
             "password",             // password
             "Joe",                  // firstName
@@ -172,7 +174,7 @@ public class AccountResourceTest {
     @Test
     @Transactional
     public void testRegisterInvalidLogin() throws Exception {
-        UserDTO u = new UserDTO(
+        UserResource u = new UserResource(
             "funky-log!n",          // login <-- invalid
             "password",             // password
             "Funky",                // firstName
@@ -195,7 +197,7 @@ public class AccountResourceTest {
     @Test
     @Transactional
     public void testRegisterInvalidEmail() throws Exception {
-        UserDTO u = new UserDTO(
+        UserResource u = new UserResource(
             "bob",              // login
             "password",         // password
             "Bob",              // firstName
@@ -219,7 +221,7 @@ public class AccountResourceTest {
     @Transactional
     public void testRegisterDuplicateLogin() throws Exception {
         // Good
-        UserDTO u = new UserDTO(
+        UserResource u = new UserResource(
             "alice",                // login
             "password",             // password
             "Alice",                // firstName
@@ -230,7 +232,7 @@ public class AccountResourceTest {
         );
 
         // Duplicate login, diff e-mail
-        UserDTO dup = new UserDTO(u.getLogin(), u.getPassword(), u.getLogin(), u.getLastName(),
+        UserResource dup = new UserResource(u.getLogin(), u.getPassword(), u.getLogin(), u.getLastName(),
             "alicejr@example.com", u.getLangKey(), u.getRoles());
 
         // Good
@@ -255,7 +257,7 @@ public class AccountResourceTest {
     @Transactional
     public void testRegisterDuplicateEmail() throws Exception {
         // Good
-        UserDTO u = new UserDTO(
+        UserResource u = new UserResource(
             "john",                 // login
             "password",             // password
             "John",                 // firstName
@@ -266,7 +268,7 @@ public class AccountResourceTest {
         );
 
         // Duplicate e-mail, diff login
-        UserDTO dup = new UserDTO("johnjr", u.getPassword(), u.getLogin(), u.getLastName(),
+        UserResource dup = new UserResource("johnjr", u.getPassword(), u.getLogin(), u.getLastName(),
             u.getEmail(), u.getLangKey(), u.getRoles());
 
         // Good
@@ -290,7 +292,7 @@ public class AccountResourceTest {
     @Test
     @Transactional
     public void testRegisterAdminIsIgnored() throws Exception {
-        UserDTO u = new UserDTO(
+        UserResource u = new UserResource(
             "badguy",               // login
             "password",             // password
             "Bad",                  // firstName

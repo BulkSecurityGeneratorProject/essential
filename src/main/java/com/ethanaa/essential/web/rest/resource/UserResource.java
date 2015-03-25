@@ -1,4 +1,4 @@
-package com.ethanaa.essential.web.rest.dto;
+package com.ethanaa.essential.web.rest.resource;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-public class UserDTO {
+public class UserResource {
 
     @Pattern(regexp = "^[a-z0-9]*$")
     @NotNull
@@ -33,10 +33,10 @@ public class UserDTO {
 
     private List<String> roles;
 
-    public UserDTO() {
+    public UserResource() {
     }
 
-    public UserDTO(String login, String password, String firstName, String lastName, String email, String langKey,
+    public UserResource(String login, String password, String firstName, String lastName, String email, String langKey,
                    List<String> roles) {
         this.login = login;
         this.password = password;

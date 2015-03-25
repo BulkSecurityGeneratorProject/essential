@@ -8,13 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "T_OIL_INFO_ITEM")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class OilInfoItem extends AbstractAuditingEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,15 +26,21 @@ public class OilInfoItem extends AbstractAuditingEntity implements Serializable 
 	@Column(name = "ordering")
 	private Integer ordering;
 
-	public OilInfoItem(Section section, String subsection, String markdown) {
+	public OilInfoItem(Section section, String subsection, String markdown, Integer ordering) {
 		
 		this.setSection(section);
 		this.setSubsection(subsection);
 		this.setMarkdown(markdown);
+		this.setOrdering(ordering);
 		
 		this.setCreatedBy("system");
 		this.setCreatedDate(new DateTime());
 	}
+	
+	public OilInfoItem(Section section, String subsection, String markdown) {
+		
+		this(section, subsection, markdown, 0);
+	}	
 	
 	public OilInfoItem() {
 
@@ -71,8 +74,16 @@ public class OilInfoItem extends AbstractAuditingEntity implements Serializable 
 		this.getId().setOil(oil);
 	}
 	
+	public Section getSection() {
+		return this.getId().getSection();
+	}		
+	
 	public void setSection(Section section) {
 		this.getId().setSection(section);
+	}
+	
+	public String getSubsection() {
+		return this.getId().getSubsection();
 	}
 	
 	public void setSubsection(String subsection) {

@@ -6,12 +6,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 @Entity
 @Table(name = "T_OIL_APPLICATION")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class OilApplication implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -41,8 +37,16 @@ public class OilApplication implements Serializable {
 		this.getId().setOil(oil);
 	}
 	
+	public UseCase getUseCase() {
+		return this.getId().getUseCase();
+	}
+	
 	public void setUseCase(UseCase useCase) {
 		this.getId().setUseCase(useCase);
+	}
+	
+	public Application getApplication() {
+		return this.getId().getApplication();
 	}
 	
 	public void setApplication(Application application) {

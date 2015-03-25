@@ -16,6 +16,11 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.beans.BeanUtils;
+
+import com.ethanaa.essential.web.rest.resource.OilResource;
 
 @Entity
 @Table(name = "T_OIL")
@@ -27,22 +32,27 @@ public class Oil extends Ingredient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)	
 	private Long id;
-	
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	    
+    @Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<OilInfoItem> infoItems = new ArrayList<>();
-	
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	 
+    @Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)	
 	private List<OilApplication> applications = new ArrayList<>();
-	
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	    
+    @Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<OilReview> reviews = new ArrayList<>();		
-
+	private List<OilReview> reviews = new ArrayList<>();		   
+    
 	public Oil(String name) {
 		
 		this.setName(name);
+	}
+	
+	public Oil(OilResource oilResource) {
+		
+		BeanUtils.copyProperties(oilResource, this);
 	}
 	
 	public Oil() {

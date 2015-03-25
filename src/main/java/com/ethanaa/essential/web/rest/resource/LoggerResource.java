@@ -1,21 +1,21 @@
-package com.ethanaa.essential.web.rest.dto;
+package com.ethanaa.essential.web.rest.resource;
 
 import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class LoggerDTO {
+public class LoggerResource {
 
     private String name;
 
     private String level;
 
-    public LoggerDTO(Logger logger) {
+    public LoggerResource(Logger logger) {
         this.name = logger.getName();
         this.level = logger.getEffectiveLevel().toString();
     }
 
     @JsonCreator
-    public LoggerDTO() {
+    public LoggerResource() {
     }
 
     public String getName() {

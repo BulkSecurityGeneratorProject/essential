@@ -21,7 +21,7 @@ public abstract class Review extends AbstractAuditingEntity implements Serializa
 	private Float rating;
 	
 	@NotNull
-	@Size(max = 4096)
+	@Size(min = 1, max = 4096)
 	@Lob
 	@Column(name = "review", length = 4096, nullable = false)
 	private String review;

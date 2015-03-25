@@ -6,13 +6,10 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "T_OIL_REVIEW")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class OilReview extends Review implements Serializable {
 
 	private static final long serialVersionUID = 1L;

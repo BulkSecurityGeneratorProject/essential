@@ -22,10 +22,10 @@ import java.util.Optional;
  * REST controller for managing users.
  */
 @RestController
-@RequestMapping("/api")
-public class UserResource {
+@RequestMapping("/api/users")
+public class UserEndpoint {
 
-    private final Logger log = LoggerFactory.getLogger(UserResource.class);
+    private final Logger log = LoggerFactory.getLogger(UserEndpoint.class);
 
     @Inject
     private UserRepository userRepository;
@@ -33,7 +33,7 @@ public class UserResource {
     /**
      * GET  /users/:login -> get the "login" user.
      */
-    @RequestMapping(value = "/users/{login}",
+    @RequestMapping(value = "/{login}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
