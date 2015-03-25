@@ -26,7 +26,7 @@ public class OilReview extends Review implements Serializable {
 		this.setRating(rating);
 		this.setReview(review);
 		
-		this.setCreatedBy("system");
+		this.setCreatedBy(user.getLogin());
 		this.setCreatedDate(new DateTime());
 	}
 	

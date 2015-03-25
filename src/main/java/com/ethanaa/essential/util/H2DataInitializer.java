@@ -67,9 +67,6 @@ public class H2DataInitializer implements InitializingBean {
 		users.put("user", userService.createUser("user", "user", "UserFirst", "UserLast", "user@essential.com", true));
 		users.put("ethanaa", userService.createUser("ethanaa", "ethanaa", "Ethan", "Anderson", "ethanaa@gmail.com", true));
 		
-		users.get("admin").addAuthorities(authorities.get(1));
-		users.get("ethanaa").addAuthorities(authorities.get(1));
-		
 		Map<String, Oil> oils = new HashMap<>();
 		oils.put("agar", oilService.createOil("Agar"));
 		oils.put("ajwain", oilService.createOil("Ajwain"));
@@ -85,19 +82,30 @@ public class H2DataInitializer implements InitializingBean {
 		applications.put("apply", applicationService.createApplication("Apply", "Prepare a salve and apply to the affected area", ApplicationCategory.SALVE));
 		applications.put("drink", applicationService.createApplication("Drink", "Create a tincture and drink it", ApplicationCategory.TINCTURE));		
 		
-		oilService.addOilInfoItems(oils.get("agar"), 
-				new OilInfoItem(Section.USES, "Modern Day Uses", "here is some markdown text"), 
-				new OilInfoItem(Section.SPECIES, "Aquilaria species that produce agarwood", "Aquilaria acuminata, found in Papua New Guinea"));
+		oilService.addOilInfoItems(oils.get("agar"),
+				
+				new OilInfoItem(Section.USES, "Modern Day Uses", 
+						"here is some markdown text"),
+						
+				new OilInfoItem(Section.SPECIES, "Aquilaria species that produce agarwood", 
+						"Aquilaria acuminata, found in Papua New Guinea"));
 		
 		oilService.addOilInfoItems(oils.get("anise"),
-				new OilInfoItem(Section.CLASSIFICATION, "", "Kingdom: Plantae"));
-		
-		oilService.addOilApplications(oils.get("agar"), new OilApplication(useCases.get("headache"), applications.get("waft")));
-		oilService.addOilApplications(oils.get("agar"), new OilApplication(useCases.get("constipation"), applications.get("drink")));
-		
-		oilService.addOilReviews(oils.get("anise"), new OilReview(users.get("ethanaa"), 7.5f, "liked the smell."));
-		oilService.addOilReviews(oils.get("anise"), new OilReview(users.get("user"), 1.0f, "tasted like liquorice. yuck."));		
 				
+				new OilInfoItem(Section.CLASSIFICATION, "Scientific", 
+						"Kingdom: Plantae"));
+		
+		oilService.addOilApplications(oils.get("agar"),				
+				new OilApplication(useCases.get("headache"), applications.get("waft")),
+				new OilApplication(useCases.get("constipation"), applications.get("drink")));
+		
+		oilService.addOilReviews(oils.get("anise"),
+				
+				new OilReview(users.get("ethanaa"), 7.5f, 
+						"liked the smell."),
+						
+				new OilReview(users.get("user"), 1.0f, 
+						"tasted like liquorice. yuck."));						
 	}
 
 }

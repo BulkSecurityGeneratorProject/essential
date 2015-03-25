@@ -12,7 +12,7 @@ public abstract class Ingredient extends AbstractAuditingEntity implements Seria
 	private static final long serialVersionUID = 1L;
 	
 	@NotNull
-	@Column(name = "name", nullable = false, length = 256)
+	@Column(name = "name", nullable = false, length = 256, unique = true)
 	private String name;
 
 	public String getName() {

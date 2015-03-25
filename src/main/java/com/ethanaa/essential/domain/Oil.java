@@ -28,12 +28,15 @@ public class Oil extends Ingredient implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)	
 	private Long id;
 	
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<OilInfoItem> infoItems = new ArrayList<>();
 	
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)	
 	private List<OilApplication> applications = new ArrayList<>();
 	
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<OilReview> reviews = new ArrayList<>();		
 
