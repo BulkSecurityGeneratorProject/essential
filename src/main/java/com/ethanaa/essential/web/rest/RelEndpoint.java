@@ -22,7 +22,8 @@ public class RelEndpoint {
 			put("info", "get the info items associated with this entity");
 			put("applications", "get the applications associated with the entity");
 			put("reviews", "get the tags associated with this entity");
-			put("image", "get the image associated with this entity");
+			put("image", "get the image associated with this entity");			
+			put("images", "get the images associated with this entity");
 			put("oil", "get the oil associated with this entity");
 			put("reviewer", "get the user that authored this review");
 		}

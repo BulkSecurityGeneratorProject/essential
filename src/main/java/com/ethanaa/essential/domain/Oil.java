@@ -43,7 +43,11 @@ public class Oil extends Ingredient implements Serializable {
 	    
     @Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<OilReview> reviews = new ArrayList<>();		   
+	private List<OilReview> reviews = new ArrayList<>();
+    
+    @Fetch(FetchMode.SUBSELECT)
+	@OneToMany(mappedBy = "oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)    
+    private List<OilImage> images = new ArrayList<>();
     
 	public Oil(String name) {
 		
@@ -104,6 +108,19 @@ public class Oil extends Ingredient implements Serializable {
 	public void addReviews(OilReview... reviews) {
 		
 		this.reviews.addAll(Arrays.asList(reviews));
+	}		
+
+	public List<OilImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<OilImage> images) {
+		this.images = images;
+	}
+	
+	public void addImages(OilImage... images) {
+		
+		this.images.addAll(Arrays.asList(images));
 	}
 
 	@Override

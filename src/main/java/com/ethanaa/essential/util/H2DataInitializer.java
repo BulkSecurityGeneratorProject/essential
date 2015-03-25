@@ -16,6 +16,7 @@ import com.ethanaa.essential.domain.ApplicationCategory;
 import com.ethanaa.essential.domain.Authority;
 import com.ethanaa.essential.domain.Oil;
 import com.ethanaa.essential.domain.OilApplication;
+import com.ethanaa.essential.domain.OilImage;
 import com.ethanaa.essential.domain.OilInfoItem;
 import com.ethanaa.essential.domain.OilReview;
 import com.ethanaa.essential.domain.Section;
@@ -108,7 +109,10 @@ public class H2DataInitializer implements InitializingBean {
 						"liked the smell."),
 						
 				new OilReview(users.get("user"), 1.0f, 
-						"tasted like liquorice. yuck."));						
+						"tasted like liquorice. yuck."));
+		
+		oilService.addOilImages(oils.get("agar"),
+				new OilImage("Agar", "Agar", "Agar in its natural habitat", "agar.png"));
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ethanaa.essential.domain.Oil;
 import com.ethanaa.essential.domain.OilApplication;
+import com.ethanaa.essential.domain.OilImage;
 import com.ethanaa.essential.domain.OilInfoItem;
 import com.ethanaa.essential.domain.OilReview;
 import com.ethanaa.essential.repository.OilRepository;
@@ -133,6 +134,19 @@ public class OilService {
 		oil = oilRepository.save(oil);
 		
 		return oil.getReviews();
+	}
+	
+	public List<OilImage> addOilImages(Oil oil, OilImage... images) {
+		
+		for (OilImage image : images) {
+			image.setOil(oil);
+		}
+		
+		oil.addImages(images);
+		
+		oil = oilRepository.save(oil);
+		
+		return oil.getImages();
 	}
 	
 	public void deleteOil(Long oilId) {
