@@ -11,7 +11,7 @@ import org.springframework.hateoas.ResourceSupport;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OilReviewResource extends ResourceSupport {
+public class OilBlendReviewResource extends ResourceSupport {
 
 	@DecimalMin("0.0")
 	@DecimalMax("10.0")

@@ -30,16 +30,20 @@ import com.codahale.metrics.annotation.Timed;
 import com.ethanaa.essential.assembler.OilBlendApplicationAssembler;
 import com.ethanaa.essential.assembler.OilBlendAssembler;
 import com.ethanaa.essential.assembler.OilBlendIngredientAssembler;
+import com.ethanaa.essential.assembler.OilBlendReviewAssembler;
 import com.ethanaa.essential.domain.OilBlend;
 import com.ethanaa.essential.domain.OilBlendApplication;
 import com.ethanaa.essential.domain.OilBlendIngredient;
+import com.ethanaa.essential.domain.OilBlendReview;
 import com.ethanaa.essential.service.OilBlendApplicationService;
 import com.ethanaa.essential.service.OilBlendIngredientService;
+import com.ethanaa.essential.service.OilBlendReviewService;
 import com.ethanaa.essential.service.OilBlendService;
 import com.ethanaa.essential.service.exception.InvalidResourceException;
 import com.ethanaa.essential.web.rest.resource.OilBlendApplicationResource;
 import com.ethanaa.essential.web.rest.resource.OilBlendIngredientResource;
 import com.ethanaa.essential.web.rest.resource.OilBlendResource;
+import com.ethanaa.essential.web.rest.resource.OilBlendReviewResource;
 
 @RestController
 @RequestMapping("/api/oilBlends")
@@ -59,10 +63,14 @@ public class OilBlendEndpoint {
 	private OilBlendApplicationService oilBlendApplicationService;
 	private OilBlendApplicationAssembler oilBlendApplicationAssembler;
 	
+	private OilBlendReviewService oilBlendReviewService;
+	private OilBlendReviewAssembler oilBlendReviewAssembler;
+	
 	@Autowired
 	public OilBlendEndpoint(OilBlendService oilBlendService, OilBlendAssembler oilBlendAssembler,
 			OilBlendIngredientService oilBlendIngredientService, OilBlendIngredientAssembler oilBlendIngredientAssembler,
-			OilBlendApplicationService oilBlendApplicationService, OilBlendApplicationAssembler oilBlendApplicationAssembler) {
+			OilBlendApplicationService oilBlendApplicationService, OilBlendApplicationAssembler oilBlendApplicationAssembler,
+			OilBlendReviewService oilBlendReviewService, OilBlendReviewAssembler oilBlendReviewAssembler) {
 		
 		this.oilBlendService = oilBlendService;
 		this.oilBlendAssembler = oilBlendAssembler;
@@ -72,6 +80,9 @@ public class OilBlendEndpoint {
 		
 		this.oilBlendApplicationService = oilBlendApplicationService;
 		this.oilBlendApplicationAssembler = oilBlendApplicationAssembler;
+		
+		this.oilBlendReviewService = oilBlendReviewService;
+		this.oilBlendReviewAssembler = oilBlendReviewAssembler;
 	}
 	
 	@Timed
@@ -166,6 +177,18 @@ public class OilBlendEndpoint {
 				linkTo(methodOn(this.getClass()).getOilBlend(id)).withRel("oilBlend"));
 		
 		return new ResponseEntity<>(oilBlendApplicationResources, HttpStatus.OK);
+	}
+	
+	@Timed
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/reviews", produces = MediaType.APPLICATION_JSON_VALUE)	
+	public ResponseEntity<PagedResources<OilBlendReviewResource>> getOilBlendReviews(@PathVariable Long id, Pageable pageable, PagedResourcesAssembler<OilBlendReview> pagedAssembler) {
+		
+		Page<OilBlendReview> page = oilBlendReviewService.getOilBlendReviewsByOilBlendId(id, pageable);
+		
+		PagedResources<OilBlendReviewResource> pagedResources = pagedAssembler.toResource(page, oilBlendReviewAssembler);
+		pagedResources.add(linkTo(methodOn(this.getClass()).getOilBlend(id)).withRel("oilBlend"));
+		
+		return new ResponseEntity<>(pagedResources, HttpStatus.OK);		
 	}	
 	
 }
