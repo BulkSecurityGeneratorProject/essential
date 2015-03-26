@@ -1,11 +1,14 @@
 package com.ethanaa.essential.assembler;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import com.ethanaa.essential.domain.OilBlendIngredient;
 import com.ethanaa.essential.web.rest.OilBlendEndpoint;
+import com.ethanaa.essential.web.rest.OilEndpoint;
 import com.ethanaa.essential.web.rest.resource.OilBlendIngredientResource;
 
 @Component
@@ -20,6 +23,10 @@ public class OilBlendIngredientAssembler extends ResourceAssemblerSupport<OilBle
 	public OilBlendIngredientResource toResource(OilBlendIngredient entity) {
 
 		OilBlendIngredientResource resource = instantiateResource(entity);
+		
+		if ("OIL".equals(entity.getId().getIngredient().getIngredientType())) {
+			resource.add(linkTo(OilEndpoint.class).slash(entity.getId().getIngredient().getId()).withSelfRel());
+		}
 		
 		BeanUtils.copyProperties(entity, resource);
 		BeanUtils.copyProperties(entity.getId().getIngredient(), resource.getIngredient());
