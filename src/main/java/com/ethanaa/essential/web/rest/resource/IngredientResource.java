@@ -8,8 +8,19 @@ import org.springframework.hateoas.ResourceSupport;
 public class IngredientResource extends ResourceSupport {
 
 	@NotNull
+	private String ingredientType;	
+	
+	@NotNull
 	@Size(min = 1, max = 256)
-	private String name;
+	private String name;		
+	
+	public String getIngredientType() {
+		return ingredientType;
+	}
+
+	public void setIngredientType(String ingredientType) {
+		this.ingredientType = ingredientType;
+	}
 
 	public String getName() {
 		return name;
