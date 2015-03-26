@@ -17,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.ethanaa.essential.service.exception.InvalidResourceException;
+import com.ethanaa.essential.service.exception.OilBlendNotFoundException;
 import com.ethanaa.essential.service.exception.OilNotFoundException;
 import com.ethanaa.essential.web.rest.resource.error.ErrorResource;
 import com.ethanaa.essential.web.rest.resource.error.FieldErrorResource;
@@ -78,6 +79,16 @@ public class RestExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(OilNotFoundException.class)
 	protected ResponseEntity<?> handleOilNotFoundException(OilNotFoundException e, NativeWebRequest request) {
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		
+		ErrorResource error = new ErrorResource(status, e, request);
+		
+		return handleExceptionInternal(e, error, headers, status, request);
+	}
+	
+	@ExceptionHandler(OilBlendNotFoundException.class)
+	protected ResponseEntity<?> handleOilBlendNotFoundException(OilBlendNotFoundException e, NativeWebRequest request) {
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		

@@ -6,13 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -25,14 +26,16 @@ import com.ethanaa.essential.web.rest.resource.OilResource;
 @Entity
 @Table(name = "T_OIL")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@DiscriminatorValue("OIL")
 public class Oil extends Ingredient implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)	
-	private Long id;
+	private static final long serialVersionUID = 1L;	
 	    
+	@DecimalMin("0.0")
+	@DecimalMax("10.0")
+	@Column(name = "rating")
+	private Float rating = 0.0f;
+	
     @Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "id.oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<OilInfoItem> infoItems = new ArrayList<>();
@@ -47,7 +50,7 @@ public class Oil extends Ingredient implements Serializable {
     
     @Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "oil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)    
-    private List<OilImage> images = new ArrayList<>();
+    private List<OilImage> images = new ArrayList<>();    
     
 	public Oil(String name) {
 		
@@ -69,6 +72,14 @@ public class Oil extends Ingredient implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}		
+
+	public Float getRating() {
+		return rating;
+	}
+
+	public void setRating(Float rating) {
+		this.rating = rating;
 	}
 
 	public List<OilInfoItem> getInfoItems() {
