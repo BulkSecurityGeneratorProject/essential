@@ -29,18 +29,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.ethanaa.essential.assembler.OilApplicationAssembler;
 import com.ethanaa.essential.assembler.OilAssembler;
+import com.ethanaa.essential.assembler.OilImageAssembler;
 import com.ethanaa.essential.assembler.OilInfoItemAssembler;
 import com.ethanaa.essential.assembler.OilReviewAssembler;
 import com.ethanaa.essential.domain.Oil;
 import com.ethanaa.essential.domain.OilApplication;
+import com.ethanaa.essential.domain.OilImage;
 import com.ethanaa.essential.domain.OilInfoItem;
 import com.ethanaa.essential.domain.OilReview;
 import com.ethanaa.essential.service.OilApplicationService;
+import com.ethanaa.essential.service.OilImageService;
 import com.ethanaa.essential.service.OilInfoItemService;
 import com.ethanaa.essential.service.OilReviewService;
 import com.ethanaa.essential.service.OilService;
 import com.ethanaa.essential.service.exception.InvalidResourceException;
 import com.ethanaa.essential.web.rest.resource.OilApplicationResource;
+import com.ethanaa.essential.web.rest.resource.OilImageResource;
 import com.ethanaa.essential.web.rest.resource.OilInfoItemResource;
 import com.ethanaa.essential.web.rest.resource.OilResource;
 import com.ethanaa.essential.web.rest.resource.OilReviewResource;
@@ -66,11 +70,15 @@ public class OilEndpoint {
 	private OilReviewService oilReviewService;
 	private OilReviewAssembler oilReviewAssembler;
 	
+	private OilImageService oilImageService;
+	private OilImageAssembler oilImageAssembler;
+	
 	@Autowired
 	public OilEndpoint(OilService oilService, OilAssembler oilAssembler, 
 			OilInfoItemService oilInfoItemService, OilInfoItemAssembler oilInfoItemAssembler,
 			OilApplicationService oilApplicationService, OilApplicationAssembler oilApplicationAssembler,
-			OilReviewService oilReviewService, OilReviewAssembler oilReviewAssembler) {
+			OilReviewService oilReviewService, OilReviewAssembler oilReviewAssembler,
+			OilImageService oilImageService, OilImageAssembler oilImageAssembler) {
 
 		this.oilService = oilService;
 		this.oilAssembler = oilAssembler;
@@ -83,6 +91,9 @@ public class OilEndpoint {
 		
 		this.oilReviewService = oilReviewService;
 		this.oilReviewAssembler = oilReviewAssembler;
+		
+		this.oilImageService = oilImageService;
+		this.oilImageAssembler = oilImageAssembler;
 	}
 	
 	@Timed
@@ -181,16 +192,28 @@ public class OilEndpoint {
 	
 	@Timed
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}/reviews", produces = MediaType.APPLICATION_JSON_VALUE)	
-	public ResponseEntity<Resources<OilReviewResource>> getOilReviews(@PathVariable Long id) {
+	public ResponseEntity<PagedResources<OilReviewResource>> getOilReviews(@PathVariable Long id, Pageable pageable, PagedResourcesAssembler<OilReview> pagedAssembler) {
 		
-		List<OilReview> oilReviews = oilReviewService.getOilReviewsByOilId(id);
+		Page<OilReview> page = oilReviewService.getOilReviewsByOilId(id, pageable);
 		
-		List<OilReviewResource> resources = oilReviewAssembler.toResources(oilReviews);
+		PagedResources<OilReviewResource> pagedResources = pagedAssembler.toResource(page, oilReviewAssembler);
+		pagedResources.add(linkTo(methodOn(this.getClass()).getOil(id)).withRel("oil"));
 		
-		Resources<OilReviewResource> oilReviewResources = new Resources<>(resources,
+		return new ResponseEntity<>(pagedResources, HttpStatus.OK);		
+	}
+	
+	@Timed
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/images", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Resources<OilImageResource>> getOilImages(@PathVariable Long id) {
+		
+		List<OilImage> oilImages = oilImageService.getOilImagesByOilId(id);
+		
+		List<OilImageResource> resources = oilImageAssembler.toResources(oilImages);
+		
+		Resources<OilImageResource> oilImageResources = new Resources<>(resources, 
 				linkTo(methodOn(this.getClass()).getOil(id)).withRel("oil"));
 		
-		return new ResponseEntity<>(oilReviewResources, HttpStatus.OK);
+		return new ResponseEntity<>(oilImageResources, HttpStatus.OK);
 	}
 	
 }

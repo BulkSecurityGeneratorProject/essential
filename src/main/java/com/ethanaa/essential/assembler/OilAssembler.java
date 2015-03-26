@@ -27,13 +27,11 @@ public class OilAssembler extends ResourceAssemblerSupport<Oil, OilResource> {
 		
 		resource.add(linkTo(OilEndpoint.class).slash(entity.getId()).withSelfRel());
 		resource.add(linkTo(OilEndpoint.class).slash(entity.getId()).slash("info").withRel("info"));
-		resource.add(linkTo(OilEndpoint.class).slash(entity.getId()).slash("image").withRel("image"));				
+		resource.add(linkTo(OilEndpoint.class).slash(entity.getId()).slash("images").withRel("images"));				
 		resource.add(linkTo(OilEndpoint.class).slash(entity.getId()).slash("applications").withRel("applications"));
 		resource.add(linkTo(OilEndpoint.class).slash(entity.getId()).slash("reviews").withRel("reviews"));		
 		
 		return resource;
 	}
 
-
-	
 }

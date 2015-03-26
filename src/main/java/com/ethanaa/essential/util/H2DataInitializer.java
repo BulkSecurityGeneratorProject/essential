@@ -14,6 +14,7 @@ import com.ethanaa.essential.config.Constants;
 import com.ethanaa.essential.domain.Application;
 import com.ethanaa.essential.domain.ApplicationCategory;
 import com.ethanaa.essential.domain.Authority;
+import com.ethanaa.essential.domain.ImageType;
 import com.ethanaa.essential.domain.Oil;
 import com.ethanaa.essential.domain.OilApplication;
 import com.ethanaa.essential.domain.OilImage;
@@ -91,8 +92,17 @@ public class H2DataInitializer implements InitializingBean {
 				new OilInfoItem(Section.SPECIES, "Aquilaria species that produce agarwood", 
 						"Aquilaria acuminata, found in Papua New Guinea"),
 						
-				new OilInfoItem(Section.CHARACTERISTICS, "Visible nature",
-						"Apears brownish-green in color", 1));
+				new OilInfoItem(Section.CHARACTERISTICS, "Appearance",
+						"Appears brownish-green in color", 1),
+						
+				new OilInfoItem(Section.CHARACTERISTICS, "Taste",
+						"Tastes like bark", 2),
+		
+				new OilInfoItem(Section.CHARACTERISTICS, "Smell",
+						"Smells like bark", 2),
+						
+				new OilInfoItem(Section.CHARACTERISTICS, "History",
+						""));		
 		
 		oilService.addOilInfoItems(oils.get("anise"),
 				
@@ -112,7 +122,8 @@ public class H2DataInitializer implements InitializingBean {
 						"tasted like liquorice. yuck."));
 		
 		oilService.addOilImages(oils.get("agar"),
-				new OilImage("Agar", "Agar", "Agar in its natural habitat", "agar.png"));
+				new OilImage(ImageType.OIL_ICON,  "AgarOil", "Agar Oil", "Agar Oil", "wood.png"),
+				new OilImage(ImageType.OIL_EXTRA, "Agarwood", "1st Grade Agarwood", "Agarwood", "agar-wood.jpg"));
 	}
 
 }

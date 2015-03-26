@@ -16,8 +16,10 @@ import org.joda.time.DateTime;
 @Table(name = "T_OIL_IMAGE")
 public class OilImage extends Image implements Serializable {
 
+	private static final String IMAGE_PATH = "/assets/images";
+	
 	private static final long serialVersionUID = 1L;
-
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,12 +28,13 @@ public class OilImage extends Image implements Serializable {
 	@JoinColumn(name = "oil_id")	
 	private Oil oil;
 
-	public OilImage(String title, String altText, String description, String filename) {
+	public OilImage(ImageType imageType, String title, String altText, String description, String filepath) {
 		
+		this.setImageType(imageType);
 		this.setTitle(title);
 		this.setAltText(altText);
 		this.setDescription(description);
-		this.setFilename(filename);
+		this.setFilepath(filepath);
 		
 		this.setCreatedBy("system");
 		this.setCreatedDate(new DateTime());
@@ -54,8 +57,20 @@ public class OilImage extends Image implements Serializable {
 	}
 
 	public void setOil(Oil oil) {
+		
 		this.oil = oil;
-	}
+		
+		switch(getImageType()) {
+		case OIL_ICON:
+			this.setFilepath(IMAGE_PATH + "/oil-icons/" +  getFilepath());
+			break;
+		case OIL_EXTRA:
+			this.setFilepath(IMAGE_PATH + "/oils/" + oil.getName().toLowerCase() + "/" + getFilepath());
+			break;
+		default:			
+			break;		
+		}		
+	}	
 
 	@Override
 	public int hashCode() {

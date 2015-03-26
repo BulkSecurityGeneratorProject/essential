@@ -1,44 +1,39 @@
-package com.ethanaa.essential.domain;
+package com.ethanaa.essential.web.rest.resource;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@MappedSuperclass
-public abstract class Image extends AbstractAuditingEntity implements Serializable {
+import org.springframework.hateoas.ResourceSupport;
 
-	private static final long serialVersionUID = 1L;
+import com.ethanaa.essential.domain.ImageType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class OilImageResource extends ResourceSupport {
+
+	@NotNull
+	private ImageType imageType;
 	
 	@Size(max = 50)
-	@Column(name = "title", length = 50)
 	private String title;
 	
 	@Size(max = 50)
-	@Column(name = "alt_text", length = 50)	
 	private String altText;
 	
 	@Size(max = 256)
-	@Column(name = "description", length = 256)	
 	private String description;
 	
 	@NotNull
 	@Pattern(regexp = "^.*\\.(?:jpe?g|png|gif|bmp)$")
-	@Column(name = "filepath", nullable = false)	
 	private String filepath;
-	
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	@Column(name = "image_type", nullable = false)
-	private ImageType imageType;	
-	
-	public Image() {
 
+	public ImageType getImageType() {
+		return imageType;
+	}
+
+	public void setImageType(ImageType imageType) {
+		this.imageType = imageType;
 	}
 
 	public String getTitle() {
@@ -71,13 +66,5 @@ public abstract class Image extends AbstractAuditingEntity implements Serializab
 
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
-	}
-
-	public ImageType getImageType() {
-		return imageType;
-	}
-
-	public void setImageType(ImageType imageType) {
-		this.imageType = imageType;
 	}
 }
