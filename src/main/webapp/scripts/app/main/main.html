@@ -1,42 +1,241 @@
 <div ng-cloak>
-    <div class="row">
-        <div class="col-md-4">
-            <span class="hipster img-responsive img-rounded"></span>
-        </div>
-        <div class="col-md-8">
-            <h1 translate="main.title">Welcome, Java Hipster!</h1>
-            <p class="lead" translate="main.subtitle">This is your homepage</p>
 
-            <div ng-switch="isAuthenticated()">
-                <div class="alert alert-success" ng-switch-when="true"
-                     translate="main.logged.message" translate-values="{username: '{{account.login}}'}">
-                    You are logged in as user "Admin".
-                </div>
+	<section id="hero" class="hero-section hero-layout-classic hero-layout-features-and-form section section-dark">
 
-                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated">
-                    If you want to <a href="#/login">authenticate</a>, you can try the default login="admin" and
-                    password="admin".
-                </div>
+		<div class="section-background">
+			<div class="section-background-image parallax" data-stellar-ratio="0.4">
+				<img src="assets/images/bg.jpg" alt="" style="opacity: 0.2;">
+			</div>
+		</div>
 
-                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register">
-                    Don't have an account? <a href=\"#/register\">Register</a>
-                </div>
-            </div>
+		<div class="container">
+			<div class="hero-content">
+				<div class="hero-content-inner">
+				
+					<div class="hero-heading row" data-animation="fadeIn">
+						<div class="col-md-10 col-md-offset-1">
 
-            <p translate="main.question">
-                If you have any question on JHipster:
-            </p>
+							<h1 class="hero-title">Essential</h1>
 
-            <ul>
-                <li><a href="http://jhipster.github.io/" target="_blank" translate="main.link.homepage">JHipster homepage</a></li>
-                <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" translate="main.link.stackoverflow">JHipster on Stack Overflow</a></li>
-                <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" translate="main.link.bugtracker">JHipster bug tracker</a></li>
-                <li><a href="https://twitter.com/java_hipster" target="_blank"  translate="main.link.contact">contact @java_hipster on Twitter</a></li>
-            </ul>
+							<p class="hero-tagline">A robust social network which
+								solves all your essential oil needs</p>
+						</div>
+					</div>
 
-            <p>
-             <span translate="main.like">If you like JHipster, don't forget to give us a star on </span>&nbsp;<a href="https://github.com/jhipster/generator-jhipster" target="_blank" translate="main.github">Github</a>!
-            </p>
-        </div>
-    </div>
+					<div class="hero-features row">
+					
+						<div class="hero-features-left col-md-7">
+							<p class="lead">Lorem ipsum dolor sit amet, consectetur
+								adipiscing elit. Sed feugiat arcu ut orci porta, eget porttitor
+								felis suscipit. Sed a nisl ullamcorper, tempus augue at, rutrum
+								lacus.</p>
+							<ul class="icon-list">
+								<li><span class="icon-list-icon fa fa-hand-o-up"
+									data-animation="bounceIn"></span>
+									<h4 class="icon-list-title">Click Through</h4>
+									<p>Sed a nisl ullamcorper, tempus augue at, rutrum lacus.
+										Duis et turpis eros. Duis ex metus, facilisis nec porta non,
+										accumsan vel turpis.</p></li>
+								<li><span class="icon-list-icon fa fa-heart-o"
+									data-animation="bounceIn"></span>
+									<h4 class="icon-list-title">Lead Generation</h4>
+									<p>Sed a nisl ullamcorper, tempus augue at, rutrum lacus.
+										Duis et turpis eros. Duis ex metus, facilisis nec porta non,
+										accumsan vel turpis.</p></li>
+								<li><span class="icon-list-icon fa fa-lightbulb-o"
+									data-animation="bounceIn"></span>
+									<h4 class="icon-list-title">Other Purposes</h4>
+									<p>Sed a nisl ullamcorper, tempus augue at, rutrum lacus.
+										Duis et turpis eros. Duis ex metus, facilisis nec porta non,
+										accumsan vel turpis.</p></li>
+							</ul>
+						</div>
+
+						<div class="hero-features-right col-md-5" data-animation="fadeIn">
+
+							<form action="" method="post" id="form" class="form" role="form">
+							
+								<h4 class="form-heading">Get Started Now!</h4>
+								<div class="form-validation alert"></div>
+								
+								<div class="form-group">
+									<label for="form-name">Name</label> <input type="text"
+										name="name" id="form-name" class="form-control"
+										placeholder="Your Full Name" autocomplete="off">
+								</div>
+
+								<div class="form-group">
+									<label for="form-email">Email Address</label> <input
+										type="email" name="email" id="form-email" class="form-control"
+										placeholder="Your Valid Email Address" autocomplete="off">
+								</div>
+
+								<div class="form-group form-group-submit">
+									<button class="btn btn-primary btn-lg btn-block"
+										data-loading-text="Action Button">Register</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="headline" class="headline-section section-gray section">
+		<div class="container">
+			<h2 class="section-heading text-center hidden">Tagline</h2>
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
+
+					<p class="headline-text">
+						Designed with the best practices, <strong>ESSENTIAL</strong> is a
+						premium landing page template which cares much about design
+						quality, functions, and the most important - your successful
+						marketing campaign.
+					</p>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="about" class="about-section section">
+		<div class="container">
+			<h2 class="section-heading text-center">About Essential</h2>
+			<div class="about-row row">
+
+				<div class="about-image col-md-6" data-animation="fadeIn">
+					<img src="assets/images/about.jpg" alt="Description Image">
+				</div>
+
+				<div class="about-text col-md-6">
+					<p class="lead">Vestibulum ante ipsum primis in faucibus orci
+						luctus et ultrices posuere cubilia Curae. Vivamus eu sollicitudin
+						lacus, nec ultricies lorem.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+						feugiat arcu ut orci porta, eget porttitor felis suscipit. Sed a
+						nisl ullamcorper, tempus augue at, rutrum lacus. Duis et turpis
+						eros. Duis ex metus, facilisis nec porta non, accumsan vel turpis.
+						Proin euismod, sem a mollis vestibulum, ligula elit faucibus erat,
+						in dignissim sapien leo eget quam.</p>
+					<ul class="icon-list">
+						<li><span class="icon-list-icon fa fa-hand-o-up"
+							data-animation="bounceIn"></span>
+							<h4 class="icon-list-title">Click Through</h4>
+							<p>Vestibulum ante ipsum primis in faucibus orci luctus et
+								ultrices posuere cubilia Curae.</p></li>
+						<li><span class="icon-list-icon fa fa-heart-o"
+							data-animation="bounceIn"></span>
+							<h4 class="icon-list-title">Lead Generation</h4>
+							<p>Vestibulum ante ipsum primis in faucibus orci luctus et
+								ultrices posuere cubilia Curae.</p></li>
+						<li><span class="icon-list-icon fa fa-lightbulb-o"
+							data-animation="bounceIn"></span>
+							<h4 class="icon-list-title">Other Purposes</h4>
+							<p>Vestibulum ante ipsum primis in faucibus orci luctus et
+								ultrices posuere cubilia Curae.</p></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="benefits" class="benefits-section section-gray section">
+		<div class="container">
+			<h2 class="section-heading text-center">The Benefits</h2>
+			<div class="benefits-row row">
+
+				<div class="col-md-4 col-sm-6">
+					<div class="benefit">
+						<span class="benefit-icon fa fa-bicycle" data-animation="bounceIn"></span>
+						<h4 class="benefit-title">Built with Bootstrap 3.3</h4>
+						<p class="benefit-description">Vestibulum ante ipsum primis in
+							faucibus orci luctus et ultrices posuere cubilia Curae. Vivamus
+							eu sollicitudin lacus, nec ultricies lorem.</p>
+					</div>
+				</div>
+
+				<div class="col-md-4 col-sm-6">
+					<div class="benefit">
+						<span class="benefit-icon fa fa-code" data-animation="bounceIn"></span>
+						<h4 class="benefit-title">Quick &amp; Easy Setup</h4>
+						<p class="benefit-description">Vestibulum ante ipsum primis in
+							faucibus orci luctus et ultrices posuere cubilia Curae. Vivamus
+							eu sollicitudin lacus, nec ultricies lorem.</p>
+					</div>
+				</div>
+
+				<div class="hidden-md hidden-lg clear"></div>
+
+				<div class="col-md-4 col-sm-6">
+					<div class="benefit">
+						<span class="benefit-icon fa fa-eye" data-animation="bounceIn"></span>
+						<h4 class="benefit-title">Responsive &amp; Retina Ready</h4>
+						<p class="benefit-description">Vestibulum ante ipsum primis in
+							faucibus orci luctus et ultrices posuere cubilia Curae. Vivamus
+							eu sollicitudin lacus, nec ultricies lorem.</p>
+					</div>
+				</div>
+
+				<div class="hidden-sm clear"></div>
+
+				<div class="col-md-4 col-sm-6">
+					<div class="benefit">
+						<span class="benefit-icon fa fa-smile-o" data-animation="bounceIn"></span>
+						<h4 class="benefit-title">Clean Codes &amp; Documentation</h4>
+						<p class="benefit-description">Vestibulum ante ipsum primis in
+							faucibus orci luctus et ultrices posuere cubilia Curae. Vivamus
+							eu sollicitudin lacus, nec ultricies lorem.</p>
+					</div>
+				</div>
+
+				<div class="hidden-md hidden-lg clear"></div>
+
+				<div class="col-md-4 col-sm-6">
+					<div class="benefit">
+						<span class="benefit-icon fa fa-pagelines"
+							data-animation="bounceIn"></span>
+						<h4 class="benefit-title">Optimized for Performance</h4>
+						<p class="benefit-description">Vestibulum ante ipsum primis in
+							faucibus orci luctus et ultrices posuere cubilia Curae. Vivamus
+							eu sollicitudin lacus, nec ultricies lorem.</p>
+					</div>
+				</div>
+
+				<div class="col-md-4 col-sm-6">
+					<div class="benefit">
+						<span class="benefit-icon fa fa-paperclip"
+							data-animation="bounceIn"></span>
+						<h4 class="benefit-title">Fit for Any Purposes</h4>
+						<p class="benefit-description">Vestibulum ante ipsum primis in
+							faucibus orci luctus et ultrices posuere cubilia Curae. Vivamus
+							eu sollicitudin lacus, nec ultricies lorem.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="closing" class="closing-section section-dark section">
+
+		<div class="section-background">
+			<div class="section-background-image parallax"
+				data-stellar-ratio="0.4">
+				<img src="assets/images/closing-bg.jpg" alt=""
+					style="opacity: 0.15;">
+			</div>
+		</div>
+
+		<div class="container">
+			<h3 class="closing-shout">Ready to start? Take the first step by
+				creating an account.</h3>
+			<div class="closing-buttons" data-animation="tada">
+				<a ui-sref="register" class="anchor-link btn btn-lg btn-primary">
+					Register
+				</a>
+			</div>
+		</div>
+		
+	</section>
 </div>
