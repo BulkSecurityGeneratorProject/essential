@@ -45,7 +45,10 @@ public class Application implements Serializable {
 	private String description;
 	
 	@OneToMany(mappedBy = "id.application", fetch = FetchType.LAZY)	
-	private List<OilApplication> applications = new ArrayList<>();
+	private List<OilApplication> oilApplications = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "id.application", fetch = FetchType.LAZY)
+	private List<OilBlendApplication> oilBlendApplications = new ArrayList<>();
 
 	public Application(String name, String description, ApplicationCategory category) {
 		
@@ -90,12 +93,12 @@ public class Application implements Serializable {
 		this.description = description;
 	}
 
-	public List<OilApplication> getApplications() {
-		return applications;
+	public List<OilApplication> getOilApplications() {
+		return oilApplications;
 	}
 
-	public void setApplications(List<OilApplication> applications) {
-		this.applications = applications;
+	public void setOilApplications(List<OilApplication> applications) {
+		this.oilApplications = applications;
 	}
 
 	@Override
