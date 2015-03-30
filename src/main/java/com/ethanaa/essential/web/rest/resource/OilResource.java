@@ -18,7 +18,7 @@ public class OilResource extends ResourceSupport {
 	
 	@DecimalMin("0.0")
 	@DecimalMax("10.0")
-	private Float rating = 0.0f;	
+	private Float rating = 0.0f;		
 
 	public String getName() {
 		return name;
@@ -34,5 +34,5 @@ public class OilResource extends ResourceSupport {
 
 	public void setRating(Float rating) {
 		this.rating = rating;
-	}		
+	}	
 }

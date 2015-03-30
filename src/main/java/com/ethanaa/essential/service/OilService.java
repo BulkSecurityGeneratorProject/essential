@@ -40,7 +40,7 @@ public class OilService {
 		List<Oil> oils = oilRepository.findByOrderByNameAsc();
 		
 		return oils;
-	}
+	}    
 	
     @Transactional(readOnly = true)
 	public Page<Oil> getOils(Pageable pageable) {

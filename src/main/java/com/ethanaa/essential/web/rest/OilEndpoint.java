@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
@@ -102,9 +103,9 @@ public class OilEndpoint {
 		
 		Page<Oil> page = oilService.getOils(pageable);
 		
-		PagedResources<OilResource> pagedResources = pagedAssembler.toResource(page, oilAssembler);
+		PagedResources<OilResource> pagedResources = pagedAssembler.toResource(page, oilAssembler);		
 		pagedResources.add(linkTo(methodOn(this.getClass()).getAllOils()).withRel("all"));
-		pagedResources.add(linkTo(this.getClass()).slash("search").withRel("search"));
+		pagedResources.add(linkTo(this.getClass()).slash("search").withRel("search"));		
 		
 		return new ResponseEntity<>(pagedResources, HttpStatus.OK);
 	}
